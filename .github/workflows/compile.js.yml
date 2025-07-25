@@ -138,59 +138,6 @@ jobs:
           path: storybook-static
           if: success()
 
-name: Test Chromatic build
-
-on:
-  pull_request:
-  workflow_dispatch: 
-
-concurrency:
-  group: compile-${{ github.workflow }}-${{ github.ref }} # Recommended if you intend to make multiple deployments in quick succession.
-  cancel-in-progress: true
-
-jobs:
-  test:
-    runs-on: ubuntu-latest
-    env:
-      HAVE_CHROMATIC_PROJECT_TOKEN: ${{ secrets.CHROMATIC_PROJECT_TOKEN != '' }}
-      IS_CHROMATIC_DISABLED: ${{ vars.CHROMATIC_DISABLED == 'True' }}
-    strategy:
-      matrix:
-        node: [ '20' ]
-
-    name: Test on Chromatic
-    steps:
-      - uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-  
-      - name: Publish to Chromatic
-        
-        if: ${{ env.HAVE_CHROMATIC_PROJECT_TOKEN == 'true' && env.IS_CHROMATIC_DISABLED == 'false' 
-          && github.event_name == 'pull_request' && github.event.action == 'opened'}}
-        
-        uses: chromaui/action@latest
-        # Options required to the GitHub Chromatic Action
-        with:
-          # 👇 Chromatic projectToken, refer to the manage page to obtain it.
-          token: ${{ secrets.GH_TOKEN }}
-          projectToken: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
-          # 👇 tell Chromatic to rebuild the entire project when a file matching the pattern is changed https://www.chromatic.com/docs/github-actions/#enable-turbosnap
-          #externals: |
-          #  *.sass
-          #  public/**
-          onlyChanged: true # 👈 Required option to enable TurboSnap
-          storybookBuildDir: "storybook-static"
-      - name: Publish to Chromatic - Is Skipped
-        if: ${{ env.HAVE_CHROMATIC_PROJECT_TOKEN != 'true' || github.event_name != 'pull_request' 
-          || (github.event_name == 'pull_request' && github.event.action != 'opened')}}
-        run: |  
-          echo "### Chromatic not configured" >> $GITHUB_STEP_SUMMARY
-          echo "secrets.CHROMATIC_PROJECT_TOKEN not existing, chromatic did not publish" >> $GITHUB_STEP_SUMMARY
-          echo "If this is a fork, please setup your own personal chromatic at" >> $GITHUB_STEP_SUMMARY
-          echo "[chromatic setup](https://www.chromatic.com/setup)" >> $GITHUB_STEP_SUMMARY
-          echo "### Chromatic is configured to run on pull requests that are in 'opened' status."
-          echo "This is done to reduce the snapshot count in Chromatic which often reaches the upper limit fast incuring cost."
-          echo "For git hub action of type, non pull requests as well as pull requests with status other than 'opened', will not be included for Chromatic build."
-          echo "If you want to change the rule, you may change the conditions under Publish to Chromatic step."
-
+  call-chromatic:
+      needs: build
+      uses: ./.github/workflows/chromatic.yml
