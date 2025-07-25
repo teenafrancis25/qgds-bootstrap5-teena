@@ -140,4 +140,4 @@ jobs:
 
   call-chromatic:
       needs: build
-      uses: chromatic.yml
+      uses: ./.github/workflows/chromatic.yml
