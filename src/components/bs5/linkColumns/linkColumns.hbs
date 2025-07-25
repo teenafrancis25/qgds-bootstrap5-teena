@@ -2,7 +2,7 @@
     <section class="link-column {{theme}}">
         <ul class="nav {{#if items_flow_vert}}col-vert-{{columns}}{{else}}col-{{columns}}{{/if}}">
             {{#ifCond items_flow '==' 'horizontal'}}
-                <li class="nav-item all-link">teena
+                <li class="nav-item all-link">
                     {{> callToAction 
                         label=(isdefined all_link.value "View all")
                         href=all_link.url 
@@ -40,7 +40,7 @@
 {{/inline}}
 
 {{#*inline "navItem"}}
-    <li class="nav-item">
+    <li class="nav-item">teena
         <a class="nav-link"{{~#if id}} id="{{id}}"{{/if~}}{{~#if target}} target="{{target}}"{{/if~}} href="{{url}}">
             {{~{value}~}}
         </a>
