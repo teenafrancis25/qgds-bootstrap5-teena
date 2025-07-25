@@ -129,8 +129,21 @@ jobs:
 
       - name: Build Storybook 🔧
         run: | # build the Storybook files
-          npm run build-storybook
+          npm run build-storybook        
+        
+      - name: Package storybook files
+        uses: actions/upload-artifact@v4 #provide nice artifact
+        with:
+          name: Storybook
+          path: storybook-static
+          if: success()
 
+      - name: Test with Chromatic
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+  
       - name: Publish to Chromatic
         
         if: ${{ env.HAVE_CHROMATIC_PROJECT_TOKEN == 'true' && env.IS_CHROMATIC_DISABLED == 'false' 
@@ -161,9 +174,3 @@ jobs:
           echo "For git hub action of type, non pull requests as well as pull requests with status other than 'opened', will not be included for Chromatic build."
           echo "If you want to change the rule, you may change the conditions under Publish to Chromatic step."
 
-
-      - name: Package storybook files
-        uses: actions/upload-artifact@v4 #provide nice artifact
-        with:
-          name: Storybook
-          path: storybook-static
