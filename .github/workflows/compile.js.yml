@@ -138,6 +138,17 @@ jobs:
           path: storybook-static
           if: success()
 
+name: Test Chromatic build
+
+on:
+  pull_request:
+  workflow_dispatch: 
+
+concurrency:
+  group: compile-${{ github.workflow }}-${{ github.ref }} # Recommended if you intend to make multiple deployments in quick succession.
+  cancel-in-progress: true
+
+jobs:
   test:
     runs-on: ubuntu-latest
     env:
@@ -146,7 +157,7 @@ jobs:
     strategy:
       matrix:
         node: [ '20' ]
-        
+
     name: Test on Chromatic
     steps:
       - uses: actions/checkout@v4
