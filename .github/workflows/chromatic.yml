@@ -1,7 +1,6 @@
 
 on:
   workflow_call:
-  pull_request:
   workflow_dispatch: 
 
 concurrency:
@@ -26,8 +25,7 @@ jobs:
   
       - name: Publish to Chromatic
         
-        if: ${{ env.HAVE_CHROMATIC_PROJECT_TOKEN == 'true' && env.IS_CHROMATIC_DISABLED == 'false' 
-          && github.event_name == 'pull_request' && github.event.action == 'opened'}}
+        if: ${{ env.HAVE_CHROMATIC_PROJECT_TOKEN == 'true' && env.IS_CHROMATIC_DISABLED == 'false' }}
         
         uses: chromaui/action@latest
         # Options required to the GitHub Chromatic Action
