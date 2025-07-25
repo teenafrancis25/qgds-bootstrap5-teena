@@ -138,7 +138,16 @@ jobs:
           path: storybook-static
           if: success()
 
-    name: Test with Chromatic
+  test:
+    runs-on: ubuntu-latest
+    env:
+      HAVE_CHROMATIC_PROJECT_TOKEN: ${{ secrets.CHROMATIC_PROJECT_TOKEN != '' }}
+      IS_CHROMATIC_DISABLED: ${{ vars.CHROMATIC_DISABLED == 'True' }}
+    strategy:
+      matrix:
+        node: [ '20' ]
+        
+    name: Test on Chromatic
     steps:
       - uses: actions/checkout@v4
         with:
