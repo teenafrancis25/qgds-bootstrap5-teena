@@ -135,7 +135,7 @@ jobs:
           path: storybook-static
 
   test:
-    - name: Chromatic Test
+      name: Chromatic Test
       needs: build
       uses: ./.github/workflows/chromatic.yml # Call the reusable workflow
       secrets: inherit
