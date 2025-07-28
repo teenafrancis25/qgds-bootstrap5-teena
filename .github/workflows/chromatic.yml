@@ -17,10 +17,14 @@ jobs:
     strategy:
       matrix:
         node: [ '20' ]
-    steps:
+    name: Test on chromatic
+    steps:      
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0      
+          
       - name: Download the dist folder artifact
-        uses: actions/download-artifact@v4  
-        name: Storybook        
+        uses: actions/download-artifact@v4          
     
       - name: Publish to Chromatic
         if: ${{ env.HAVE_CHROMATIC_PROJECT_TOKEN == 'true' && env.IS_CHROMATIC_DISABLED == 'false'}}
