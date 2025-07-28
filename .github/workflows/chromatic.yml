@@ -24,13 +24,17 @@ jobs:
         with:
           fetch-depth: 0      
 
-      - name: Download the dist folder artifact
+      - name: Download the storybook artifact
         uses: actions/download-artifact@v4
         with:
           path: storybook-static     
           pattern: Storybook
           merge-multiple: 'true' 
-    
+
+      - name: Extract the artifact
+        run: |
+          gunzip .Storybook.gz
+
       - name: Publish to Chromatic
         if: ${{ env.HAVE_CHROMATIC_PROJECT_TOKEN == 'true' && env.IS_CHROMATIC_DISABLED == 'false'}}
         uses: chromaui/action@latest
