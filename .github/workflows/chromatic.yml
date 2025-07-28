@@ -24,8 +24,9 @@ jobs:
           fetch-depth: 0      
 
       - name: Download the dist folder artifact
-        uses: actions/download-artifact@v4 
-        path: storybook-static     
+        uses: actions/download-artifact@v4
+        with:
+          path: storybook-static     
 
       - name: Extract branch name
         shell: bash
