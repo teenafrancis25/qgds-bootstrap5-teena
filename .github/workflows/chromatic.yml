@@ -19,13 +19,10 @@ jobs:
         node: [ '20' ]
     name: Test on chromatic
     steps:
-      - name: Download the dist folder
-        uses: actions/download-artifact@v4          
+      - name: Download the dist folder artifact
+        uses: actions/download-artifact@v4  
+        name: Storybook        
     
-      - uses: actions/checkout@v4
-        with:
-          fetch-depth: 0      
-
       - name: Publish to Chromatic
         if: ${{ env.HAVE_CHROMATIC_PROJECT_TOKEN == 'true' && env.IS_CHROMATIC_DISABLED == 'false'}}
         uses: chromaui/action@latest
