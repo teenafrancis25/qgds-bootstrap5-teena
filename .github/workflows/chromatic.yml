@@ -9,7 +9,7 @@ on:
   #Click 'Run workflow' to trigger the workflow manually
   
 jobs:
-  build:
+  test:
     runs-on: ubuntu-latest
     env:
       HAVE_CHROMATIC_PROJECT_TOKEN: ${{ secrets.CHROMATIC_PROJECT_TOKEN != '' }}
@@ -17,7 +17,7 @@ jobs:
     strategy:
       matrix:
         node: [ '20' ]
-    name: Lint, Test, Build and Deploy on Node ${{ matrix.node }}
+    name: Test on chromatic
     steps:
       - uses: actions/checkout@v4
         with:
@@ -44,3 +44,8 @@ jobs:
           echo "secrets.CHROMATIC_PROJECT_TOKEN not existing, chromatic did not publish" >> $GITHUB_STEP_SUMMARY
           echo "If this is a fork, please setup your own personal chromatic at" >> $GITHUB_STEP_SUMMARY
           echo "[chromatic setup](https://www.chromatic.com/setup)" >> $GITHUB_STEP_SUMMARY
+      - name: Package storybook files
+        uses: actions/upload-artifact@v4 #provide nice artifact
+        with:
+          name: Storybook
+          path: storybook-static
