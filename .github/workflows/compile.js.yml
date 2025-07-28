@@ -4,7 +4,8 @@
 name: Build and Test
 
 on:
-  workflow_dispatch:
+  workflow_dispatch: #see github -> Actions tab. Choose workflow name from left. Choose your branch name from dropdown on right side pane.
+  #Click 'Run workflow' to trigger the workflow manually
   push:
     branches:
     # limiting the build to happen only for below branches. Also block cdn and binary repo updates
