@@ -33,7 +33,7 @@ jobs:
 
       - name: Extract the artifact
         run: |
-          gunzip .Storybook.gz
+          gunzip .storybook-static.gz
 
       - name: Publish to Chromatic
         if: ${{ env.HAVE_CHROMATIC_PROJECT_TOKEN == 'true' && env.IS_CHROMATIC_DISABLED == 'false'}}
