@@ -30,6 +30,9 @@ jobs:
           path: storybook-static     
           pattern: Storybook
           merge-multiple: 'true' 
+          
+      - name: List files before unzip
+        run: ls -lah
 
       - name: Extract the artifact
         run: |          
