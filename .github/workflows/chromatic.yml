@@ -30,13 +30,16 @@ jobs:
           path: storybook-static     
           pattern: Storybook
           merge-multiple: 'true' 
-          
+
       - name: List files before unzip
-        run: ls -lah
+        run: ls -lah .storybook-static
+
+      - name: Unzip the artifact
+        run: unzip storybook-static/.storybook-static.zip -d extracted-folder
 
       - name: Extract the artifact
         run: |          
-          unzip .storybook-static.zip -d storybook-static
+          unzip .storybook-static/storybook-static.zip -d storybook-static
 
       - name: Publish to Chromatic
         if: ${{ env.HAVE_CHROMATIC_PROJECT_TOKEN == 'true' && env.IS_CHROMATIC_DISABLED == 'false'}}
