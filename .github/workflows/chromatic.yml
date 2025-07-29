@@ -32,7 +32,7 @@ jobs:
           merge-multiple: 'true' 
 
       - name: List files before unzip
-        run: ls -lah .storybook-static
+        run: ls -lah storybook-static
 
       - name: Unzip the artifact
         run: unzip storybook-static/.storybook-static.zip -d extracted-folder
