@@ -20,6 +20,7 @@ export default {
   },
 
   parameters: {
+    chromatic: { disableSnapshot: true },
     docs: {
       controls: {
 
