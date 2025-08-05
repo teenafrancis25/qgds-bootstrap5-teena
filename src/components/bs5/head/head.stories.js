@@ -41,6 +41,10 @@ export default {
  */
 export const Default = {
   args: defaultdata,
+  parameters: {
+    // Disables Chromatic's snapshotting on a component level
+    chromatic: { disableSnapshot: true },
+  },
   decorators: [
     (Story) => {
       return `
@@ -55,6 +59,10 @@ export const DEV = {
   args: {
     cdn: "DEV",
   },
+  parameters: {
+    // Disables Chromatic's snapshotting on a component level
+    chromatic: { disableSnapshot: true },
+  },
   decorators:[Story => {
     return `
           ${Story()}
@@ -65,6 +73,10 @@ export const DEV = {
 export const SQUIZ = {
   args: {
     cdn: "/__data/assets/git_bridge/0026/471752",
+  },
+  parameters: {
+    // Disables Chromatic's snapshotting on a component level
+    chromatic: { disableSnapshot: true },
   },
   decorators:[Story => {
     return `

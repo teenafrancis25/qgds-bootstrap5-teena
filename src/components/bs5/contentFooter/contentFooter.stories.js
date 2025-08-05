@@ -46,6 +46,10 @@ export const Default = {
 export const DefaultEmpty = {
   args: {
   },
+  parameters: {
+    // Disables Chromatic's snapshotting on a component level
+    chromatic: { disableSnapshot: true },
+  },
   decorators:[Story => {
     return `
           ${Story()}
